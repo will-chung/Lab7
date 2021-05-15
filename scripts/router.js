@@ -37,7 +37,7 @@ router.setState = function(state) {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
-
+  console.log('setting state');
   document.querySelector('body').className = state.className;
 
   let title = document.querySelector('header > h1');
@@ -53,6 +53,5 @@ router.setState = function(state) {
     title.innerHTML = 'Journal Entries';
   }
 
-  console.log(state.url);
   history.pushState(state, '', state.url);
 }

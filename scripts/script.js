@@ -4,6 +4,17 @@ import { router } from './router.js'; // Router imported so you can use it to ma
 const setState = router.setState;
 
 // Make sure you register your service worker here too
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed :(
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 
 let state;
 
@@ -14,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       entries.forEach(entry => {
         let newPost = document.createElement('journal-entry');
         newPost.entry = entry;
+        
         newPost.addEventListener('click', (event) => {
           let entries = event.target.parentElement.children;
           let entryNumber;
@@ -28,8 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
             entryNumber: entryNumber,
             entry: event.target.entry,
           };
-          router.setState(state);
+          setState(state);
         });
+        
         document.querySelector('main').appendChild(newPost);
       });
     });
@@ -44,7 +57,7 @@ title.addEventListener('click', () => {
     className: '',
     url: '/',
   }
-  router.setState(state);
+  setState(state);
 });
 
 settings.addEventListener('click', () => {
@@ -53,5 +66,10 @@ settings.addEventListener('click', () => {
     className: 'settings',
     url: '/#settings',
   }
-  router.setState(state);
+  setState(state);
+});
+
+window.addEventListener('popstate', (event) => {
+  console.log('back button pressed');
+  setState(event.state);
 });
