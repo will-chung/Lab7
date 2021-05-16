@@ -7,7 +7,7 @@ const defaultUrl = window.location;
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function(state) {
+router.setState = function(state, isPopState) {
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -53,5 +53,6 @@ router.setState = function(state) {
     title.innerHTML = 'Journal Entries';
   }
 
-  history.pushState(state, '', state.url);
+  if (!isPopState)
+    history.pushState(state, '', state.url);
 }
