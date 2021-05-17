@@ -4,4 +4,4 @@
 - William Chung
 
 ## Deployed Site
-Linked [here]().
+Linked [here](https://will-chung.github.io/Lab7/).
